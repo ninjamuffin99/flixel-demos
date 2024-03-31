@@ -1,5 +1,12 @@
 package;
 
+import flixel.util.FlxSort;
+import nape.shape.Polygon;
+import nape.geom.GeomPoly;
+import flixel.group.FlxGroup;
+import flixel.math.FlxAngle;
+import flixel.math.FlxMath;
+import nape.geom.Ray;
 import flixel.FlxCamera;
 import flixel.addons.nape.FlxNapeSpace;
 import flixel.addons.nape.FlxNapeTilemap;
@@ -59,6 +66,9 @@ class PlayState extends FlxState
 	var infoText:FlxText;
 	var fps:FPS;
 
+	var rayPoints:FlxGroup;
+	var canvas:FlxSprite;
+
 	override public function create():Void
 	{
 		super.create();
@@ -86,7 +96,20 @@ class PlayState extends FlxState
 		FlxG.stage.addChild(fps);
 		fps.visible = false;
 		
+
+		rayPoints = new FlxGroup();
+		add(rayPoints);
+
+		
+
 		createCams();
+
+		canvas = new FlxSprite(0, 0);
+		canvas.makeGraphic(FlxG.width, FlxG.height, FlxColor.TRANSPARENT, true);
+		canvas.blend = BlendMode.MULTIPLY;
+		add(canvas);
+		
+		// trace(FlxNapeSpace.space.liveBodies.length);
 	}
 	
 	function createCams()
@@ -136,10 +159,104 @@ class PlayState extends FlxState
 		foreground.setTile(x, y, 0);
 	}
 
+
+
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+
+		rayPoints.killMembers();
+		rayPoints.clear();
 		
+		var vertsForPoly:Array<Vec2> = [];
+
+		for (body in FlxNapeSpace.space.bodies)
+			{	
+				if (body == null)
+					continue;
+	
+				for (shape in body.shapes)
+				{
+					if (shape.isPolygon())
+					{
+						var poly = shape.castPolygon;
+						var verts = poly.worldVerts;
+						for (v in verts)
+						{
+							var bodyPos = body.position;
+							var rays:Array<Ray> = [];
+							var ray0 = new Ray(gem.body.position, v.sub(gem.body.position, true));
+							var ray1 = ray0.copy();
+							var ray2 = ray0.copy();
+							ray1.direction = ray1.direction.rotate(FlxAngle.asRadians(3));
+							ray2.direction = ray2.direction.rotate(FlxAngle.asRadians(-3));
+							
+							rays.push(ray0);
+							rays.push(ray1);
+							rays.push(ray2);
+
+							for (ray in rays)
+							{
+								var raycastResult = FlxNapeSpace.space.rayCast(ray);
+								if (raycastResult != null)
+								{
+									var rayPos = ray.at(raycastResult.distance);
+									
+									vertsForPoly.push(rayPos);
+									// rayPoints.add(new FlxSprite(rayPos.x, rayPos.y).makeGraphic(4, 4, FlxColor.RED));
+								}
+							}
+							
+						}
+						
+					}
+
+				}
+				// var bodyPos = body.position;
+				// var ray = new Ray(gem.body.position, bodyPos.sub(gem.body.position, true));
+				// var raycastResult = FlxNapeSpace.space.rayCast(ray);
+	
+				
+				
+			}
+		
+		vertsForPoly.sort(function(vec1, vec2) {
+			var angle1 = Math.atan2(gem.body.position.y - vec1.y, gem.body.position.x - vec1.x);
+			var angle2 = Math.atan2(gem.body.position.y - vec2.y, gem.body.position.x - vec2.x);
+			return FlxSort.byValues(FlxSort.ASCENDING, angle1, angle2);
+		});
+		
+		var poly = GeomPoly.get(Vec2List.fromArray(vertsForPoly));
+
+			canvas.fill(0xff2a2963);
+			
+			var simplePoly = poly;
+			var points:Array<FlxPoint> = [];
+			for (vert in simplePoly.iterator())
+			{
+				points.push(new FlxPoint(vert.x, vert.y));
+			}
+			canvas.drawPolygon(points, 0xff887fff);
+
+			// FlxNapeSpace.shapeDebug.drawFilledPolygon(poly.simplify(0.1), FlxColor.RED);
+		
+
+		// poly.triangularDecomposition();
+
+		// var mousePos = FlxG.mouse.getWorldPosition();
+		// var mouseVec = new Vec2(mousePos.x, mousePos.y);
+		// var ray = new Ray(gem.body.position, mouseVec.sub(gem.body.position, true));
+		// var raycastResult = FlxNapeSpace.space.rayCast(ray);
+
+
+		// if (raycastResult != null)
+		// {
+		// 	var rayPos = ray.at(raycastResult.distance);
+		// 	rayPoint.x = rayPos.x;
+		// 	rayPoint.y = rayPos.y;
+		// }
+
+
 		infoText.text = "FPS: " + fps.currentFPS + "\n\nObjects can be dragged/thrown around.\n\nPress 'R' to restart.";
 
 		if (FlxG.keys.justPressed.R)
