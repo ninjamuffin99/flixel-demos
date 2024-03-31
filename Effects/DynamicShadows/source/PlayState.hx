@@ -188,8 +188,8 @@ class PlayState extends FlxState
 							var ray0 = new Ray(gem.body.position, v.sub(gem.body.position, true));
 							var ray1 = ray0.copy();
 							var ray2 = ray0.copy();
-							ray1.direction = ray1.direction.rotate(FlxAngle.asRadians(3));
-							ray2.direction = ray2.direction.rotate(FlxAngle.asRadians(-3));
+							ray1.direction = ray1.direction.rotate(0.00001);
+							ray2.direction = ray2.direction.rotate(-0.00001);
 							
 							rays.push(ray0);
 							rays.push(ray1);
