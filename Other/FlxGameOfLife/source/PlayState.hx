@@ -1,5 +1,6 @@
 package;
 
+import flixel.math.FlxMath;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -407,6 +408,8 @@ class PlayState extends FlxState
 		}
 	}
 
+	var mPosOffPrev:FlxPoint;
+
 	/**
 	 * check on what the player is doing with the mouse
 	 */
@@ -426,9 +429,25 @@ class PlayState extends FlxState
 			else if (FlxG.mouse.pressed) // if the player is pressing the mouse, paint or erase the tile they are over, based on their mode
 			{
 				lifeMap.setTile(Std.int(mPosOff.x), Std.int(mPosOff.y), mouseMode == PAINT ? 1 : 0);
+
+				if (mPosOffPrev != null)
+				{
+					// if the player is dragging the mouse, paint or erase all the tiles between the last tile they were over and the current tile
+
+					for (points in getLine(Std.int(mPosOffPrev.x), Std.int(mPosOffPrev.y), Std.int(mPosOff.x), Std.int(mPosOff.y)))
+						lifeMap.setTile(points.x, points.y, mouseMode == PAINT ? 1 : 0);
+					
+				}
+
+				mPosOffPrev = FlxPoint.get(mPosOff.x, mPosOff.y);
 			}
-			else if (FlxG.mouse.released) // if the player released the mouse, set the mode to none
+			else if (FlxG.mouse.released)
+			{
+				// if the player released the mouse, set the mode to none
 				mouseMode = NONE;
+				mPosOffPrev = null;
+			
+			} 
 			updateMouseCursor(true);
 		}
 		else
@@ -437,6 +456,55 @@ class PlayState extends FlxState
 			updateMouseCursor(false);
 		}
 	}
+
+	/**
+	 * Implementation of Bresenham algorithm
+	 * From deepknight! https://deepnight.net/tutorial/bresenham-magic-raycasting-line-of-sight-pathfinding/
+	 */
+	function getLine(x0:Int, y0:Int, x1:Int, y1:Int):Array<{x:Int, y:Int}> {
+		var pts = [];
+		var swapXY = Math.abs( y1 - y0 ) > Math.abs( x1 - x0 );
+		var tmp : Int;
+		if ( swapXY ) {
+			// swap x and y
+			tmp = x0; x0 = y0; y0 = tmp; // swap x0 and y0
+			tmp = x1; x1 = y1; y1 = tmp; // swap x1 and y1
+		}
+	
+		if ( x0 > x1 ) {
+			// make sure x0 < x1
+			tmp = x0; x0 = x1; x1 = tmp; // swap x0 and x1
+			tmp = y0; y0 = y1; y1 = tmp; // swap y0 and y1
+		}
+	
+		var deltax = x1 - x0;
+		var deltay = Math.floor( Math.abs( y1 - y0 ) );
+		var error = Math.floor( deltax / 2 );
+		var y = y0;
+		var ystep = if ( y0 < y1 ) 1 else -1;
+		if( swapXY )
+			// Y / X
+			for ( x in x0 ... x1+1 ) {
+				pts.push({x:y, y:x});
+				error -= deltay;
+				if ( error < 0 ) {
+					y = y + ystep;
+					error = error + deltax;
+				}
+			}
+		else
+			// X / Y
+			for ( x in x0 ... x1+1 ) {
+				pts.push({x:x, y:y});
+				error -= deltay;
+				if ( error < 0 ) {
+					y = y + ystep;
+					error = error + deltax;
+				}
+			}
+		return pts;
+	
+	} 
 
 	/**
 	 * updates the mouse cursor based on the mode
