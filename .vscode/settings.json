@@ -58,7 +58,7 @@
 		"Features/SplitScreen/source",
 		"Features/SubState/source",
 		"Features/Tilemap/source",
-		"Graphics/FlxAsepriteUtils/source",
+		"Graphics/FlxAsepriteUtil/source",
 		"Input/FlxAccelerometer/source",
 		"Input/FlxAction/source",
 		"Input/FlxMouseEvent/source",
