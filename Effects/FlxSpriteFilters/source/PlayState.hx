@@ -1,6 +1,5 @@
 package;
 
-import openfl.filters.BitmapFilterQuality;
 import flash.filters.BitmapFilter;
 import flash.filters.BlurFilter;
 import flash.filters.DropShadowFilter;
