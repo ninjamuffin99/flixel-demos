@@ -1,5 +1,6 @@
 package;
 
+import openfl.filters.BitmapFilterQuality;
 import flash.filters.BitmapFilter;
 import flash.filters.BlurFilter;
 import flash.filters.DropShadowFilter;
@@ -163,22 +164,27 @@ class PlayState extends FlxState
 		}
 		if (isAnimSpr2)
 		{
+			spr2.angle += 45 * elapsed;
 			updateFilter(spr2, spr2Filter);
 		}
 		if (isAnimSpr3)
 		{
+			spr3.angle += 45 * elapsed;
 			updateFilter(spr3, spr3Filter);
 		}
 		if (isAnimSpr4)
 		{
+			spr4.angle += 45 * elapsed;
 			updateDropShadowFilter(elapsed);
 		}
 		if (isAnimSpr5)
 		{
+			spr5.angle += 45 * elapsed;
 			updateFilter(spr5, spr5Filter);
 		}
 		if (isAnimSpr6)
 		{
+			spr6.angle += 45 * elapsed;
 			updateDisplaceFilter();
 		}
 	}
@@ -200,6 +206,7 @@ class PlayState extends FlxState
 
 	function updateFilter(spr:FlxSprite, sprFilter:FlxFilterFrames)
 	{
+		spr.offset.set();
 		sprFilter.applyToSprite(spr, false, true);
 	}
 }
