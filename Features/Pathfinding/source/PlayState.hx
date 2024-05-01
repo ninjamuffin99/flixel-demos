@@ -12,6 +12,7 @@ import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
+
 // import openfl.Assets;
 
 class PlayState extends FlxState
@@ -257,7 +258,7 @@ class PlayState extends FlxState
 		// Check mouse pressed and unit action
 		if (FlxG.mouse.pressed)
 		{
-			var index = map.getTileIndexByCoords(FlxG.mouse.getWorldPosition());
+			var index = map.getTileIndexByCoords(FlxG.mouse.getWorldPosition(FlxPoint.weak()));
 			if (index != -1)
 			{
 				var tileEmpty = map.getTileByIndex(index) == 0;
@@ -303,17 +304,17 @@ class PlayState extends FlxState
 	{
 		// Find path to goal from unit to goal
 		pathfinder.diagonalPolicy = diagonalPolicy;
-		var pathPoints:Array<FlxPoint> = pathfinder.findPath(
+		final pathPoints:Array<FlxPoint> = pathfinder.findPath(
 			cast map,
-			FlxPoint.get(unit.x + unit.width / 2, unit.y + unit.height / 2),
-			FlxPoint.get(goal.x + goal.width / 2, goal.y + goal.height / 2),
+			FlxPoint.weak(unit.x + unit.width / 2, unit.y + unit.height / 2),
+			FlxPoint.weak(goal.x + goal.width / 2, goal.y + goal.height / 2),
 			simplify
 		);
 
 		// Tell unit to follow path
 		if (pathPoints != null)
 		{
-			unit.path.start(pathPoints);
+			unit.path.start(pathPoints, 100.0, FORWARD, false, true);
 			action = GO;
 			instructions.text = INSTRUCTIONS;
 		}

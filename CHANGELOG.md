@@ -1,6 +1,19 @@
+3.2.0 (May 1, 2024)
+- `FlxGameOfLife`: New demo! ([#342](https://github.com/HaxeFlixel/flixel-demos/pull/342))
+- `FlxLightPuzzle`: Bigger screen size ([#328](https://github.com/HaxeFlixel/flixel-demos/pull/328))
+- Compatibility with Flixel 6.0 dev branch ([#331](https://github.com/HaxeFlixel/flixel-demos/pull/331))
+- `PostProcess`: Removed demo ([#332](https://github.com/HaxeFlixel/flixel-demos/pull/332))
+- `MinimalistTD`: Change `Int` args to `FlxButtonState` ([#333](https://github.com/HaxeFlixel/flixel-demos/pull/333))
+- Compatibility with Flixel 5.7 ([#334](https://github.com/HaxeFlixel/flixel-demos/pull/334))
+- `FlxInvaders`: Add sound and music ([#335](https://github.com/HaxeFlixel/flixel-demos/pull/335))
+- `FlxSubstate`: renamed from `SubState` ([#339](https://github.com/HaxeFlixel/flixel-demos/pull/339))
+- `FlxAsepriteUtil`: renamed from `FlxAsepriteUtils` ([#347](https://github.com/HaxeFlixel/flixel-demos/pull/347))
+- `FlxFilterFrames`: fixed rotation and offsets ([#349](https://github.com/HaxeFlixel/flixel-demos/pull/349))
+- Remove .hxproj files
+
 3.1.0 (November 3, 2023)
 ------------------------------
-- `FlxFSM`:fix jump after superjump pickup, add groundpound pickup ([#323](https://github.com/HaxeFlixel/flixel-demos/pull/323))
+- `FlxFSM`: fix jump after superjump pickup, add groundpound pickup ([#323](https://github.com/HaxeFlixel/flixel-demos/pull/323))
 - `FlxCamera`: Various changes ([#324](https://github.com/HaxeFlixel/flixel-demos/pull/324))
    - add gamepad controls
    - dynamic level sizing
