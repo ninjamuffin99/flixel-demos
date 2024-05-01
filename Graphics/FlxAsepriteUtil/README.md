@@ -1,6 +1,6 @@
-# FlxAsepriteUtils
+# FlxAsepriteUtil
 
-Demonstrates how to utilize Aseprite art files with the built-in FlxAsepriteUtils functionality.
+Demonstrates how to utilize Aseprite art files with the built-in FlxAsepriteUtil functionality.
 
 ## Table of Contents
 

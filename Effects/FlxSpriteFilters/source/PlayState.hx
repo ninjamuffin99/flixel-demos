@@ -205,7 +205,8 @@ class PlayState extends FlxState
 
 	function updateFilter(spr:FlxSprite, sprFilter:FlxFilterFrames)
 	{
-		// spr.offset.set();
+		// Reset the offset, it will ballon with each apply call
+		spr.offset.set();
 		sprFilter.applyToSprite(spr, false, true);
 	}
 }
