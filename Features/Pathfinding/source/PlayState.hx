@@ -201,7 +201,7 @@ class PlayState extends FlxState
 			function clearMap()
 			{
 				for (i in 0...map.totalTiles)
-					map.setTileByIndex(i, 0);
+					map.setTileIndex(i, 0);
 				
 				redrawPath();
 			}
@@ -258,22 +258,22 @@ class PlayState extends FlxState
 		// Check mouse pressed and unit action
 		if (FlxG.mouse.pressed)
 		{
-			var index = map.getTileIndexByCoords(FlxG.mouse.getWorldPosition(FlxPoint.weak()));
+			var index = map.getMapIndexAt(FlxG.mouse.x, FlxG.mouse.y);
 			if (index != -1)
 			{
-				var tileEmpty = map.getTileByIndex(index) == 0;
+				var tileEmpty = map.getTileIndex(index) == 0;
 				if (FlxG.mouse.justPressed)
 				{
 					// start toggle tiles
 					isPlacing = tileEmpty;
-					map.setTileByIndex(index, isPlacing ? 1 : 0, true);
+					map.setTileIndex(index, isPlacing ? 1 : 0, true);
 
 					mapChanged = true;
 				}
 				else if (tileEmpty == isPlacing)
 				{
 					// continue toggling tiles on mouse drag
-					map.setTileByIndex(index, isPlacing ? 1 : 0, true);
+					map.setTileIndex(index, isPlacing ? 1 : 0, true);
 
 					mapChanged = true;
 				}
