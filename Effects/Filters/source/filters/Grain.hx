@@ -32,11 +32,10 @@ class Grain extends FlxShader
 		float width = openfl_TextureSize.x;
 		float height = openfl_TextureSize.y;
 
-		const float grainamount = 0.05; //grain amount
+		const float grainamount = 0.1; //grain amount
 		bool colored = false; //colored noise?
 		float coloramount = 0.6;
-		float grainsize = 1.6; //grain particle size (1.5 - 2.5)
-		float lumamount = 1.0; //
+		float grainsize = 2.0; //grain particle size (1.5 - 2.5)
 
 		//a random texture generator, but you can also use a pre-computed perturbation texture
 		vec4 rnm(in vec2 tc)
@@ -130,15 +129,6 @@ class Grain extends FlxShader
 			}
 
 			vec3 col = texture2D(bitmap, openfl_TextureCoordv).rgb;
-
-			//noisiness response curve based on scene luminance
-			vec3 lumcoeff = vec3(0.299,0.587,0.114);
-			float luminance = mix(0.0,dot(col, lumcoeff),lumamount);
-			float lum = smoothstep(0.2,0.0,luminance);
-			lum += luminance;
-
-
-			noise = mix(noise,vec3(0.0),pow(lum,4.0));
 			col = col+noise*grainamount;
 
 			gl_FragColor =  vec4(col,1.0);
