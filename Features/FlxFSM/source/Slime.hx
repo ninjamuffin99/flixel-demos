@@ -1,5 +1,6 @@
 package;
 
+import flixel.sound.FlxSound;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.util.FlxFSM;
@@ -95,8 +96,11 @@ class Conditions
 
 class Idle extends FlxFSMState<Slime>
 {
+	var walkSnd:FlxSound;
+
 	override function enter(owner:Slime, fsm:FlxFSM<Slime>):Void
 	{
+		walkSnd = FlxG.sound.load("assets/walk.ogg", 0.4);
 		owner.animation.play("standing");
 	}
 
@@ -105,6 +109,7 @@ class Idle extends FlxFSMState<Slime>
 		owner.acceleration.x = 0;
 		if (FlxG.keys.pressed.LEFT || FlxG.keys.pressed.RIGHT)
 		{
+			walkSnd.play();
 			owner.facing = FlxG.keys.pressed.LEFT ? LEFT : RIGHT;
 			owner.animation.play("walking");
 			owner.acceleration.x = FlxG.keys.pressed.LEFT ? -300 : 300;
@@ -115,12 +120,18 @@ class Idle extends FlxFSMState<Slime>
 			owner.velocity.x *= 0.9;
 		}
 	}
+
+	override function exit(owner:Slime) {
+		walkSnd.stop();
+		super.exit(owner);
+	}
 }
 
 class Jump extends FlxFSMState<Slime>
 {
 	override function enter(owner:Slime, fsm:FlxFSM<Slime>):Void
 	{
+		FlxG.sound.play("assets/jump.ogg", FlxG.random.float(0.9, 1.0));
 		owner.animation.play("jumping");
 		owner.velocity.y = -200;
 	}
@@ -139,6 +150,7 @@ class SuperJump extends Jump
 {
 	override function enter(owner:Slime, fsm:FlxFSM<Slime>):Void
 	{
+		FlxG.sound.play("assets/superjump.ogg", FlxG.random.float(0.9, 1.0));
 		owner.animation.play("jumping");
 		owner.velocity.y = -300;
 	}
@@ -150,6 +162,7 @@ class GroundPound extends FlxFSMState<Slime>
 
 	override function enter(owner:Slime, fsm:FlxFSM<Slime>):Void
 	{
+		FlxG.sound.play("assets/groundpound.ogg");
 		owner.animation.play("pound");
 		owner.velocity.x = 0;
 		owner.acceleration.x = 0;
@@ -174,6 +187,7 @@ class GroundPoundFinish extends FlxFSMState<Slime>
 {
 	override function enter(owner:Slime, fsm:FlxFSM<Slime>):Void
 	{
+		FlxG.sound.play("assets/groundpoundfinish.ogg");
 		owner.animation.play("landing");
 		FlxG.camera.shake(0.025, 0.25);
 		owner.velocity.x = 0;
