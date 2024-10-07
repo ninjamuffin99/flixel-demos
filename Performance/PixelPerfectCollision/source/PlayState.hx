@@ -88,6 +88,9 @@ class PlayState extends FlxState
 		updateSpriteAngles();
 		updateSpriteScales();
 
+		FlxG.camera.update(FlxG.elapsed);
+
+
 		// add objects for more interstellar fun!
 		for (i in 1...NUM_ALIENS)
 			addAlien();

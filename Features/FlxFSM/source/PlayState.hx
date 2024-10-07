@@ -30,6 +30,12 @@ class PlayState extends FlxState
 		bgColor = 0xff661166;
 		super.create();
 
+		// Music by 8-BITek
+		// Licensed under CC BY-NC-ND 3.0
+		// https://www.newgrounds.com/audio/listen/1341678
+		FlxG.sound.playMusic("assets/happynewyear.ogg", 0);
+		FlxG.sound.music.fadeIn(2, 0, 0.2);
+
 		final J = 99;
 		final G = 100;
 		final columns = 20;
@@ -86,12 +92,14 @@ class PlayState extends FlxState
 		
 		FlxG.overlap(_slime, _superJump, function (_, _)
 		{
+			FlxG.sound.play("assets/powerup.ogg");
 			_slime.addSuperJump();
 			_superJump.kill();
 		});
 		
 		FlxG.overlap(_slime, _groundPound, function (_, _)
 		{
+			FlxG.sound.play("assets/powerup.ogg");
 			_slime.addGroundPound();
 			_groundPound.kill();
 			startGroundPoundInfoTween();
