@@ -110,7 +110,7 @@ class PlayState extends FlxState
 		add(backdrop);
 		
 		FlxG.camera.filters = filters;
-		FlxG.game.filters = filters;
+		FlxG.game.setFilters(filters);
 		
 		FlxG.game.filtersEnabled = false;
 		
