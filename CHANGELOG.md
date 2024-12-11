@@ -10,6 +10,7 @@
 - `CollisionAndGrouping`: Increase game size ([#357](https://github.com/HaxeFlixel/flixel-demos/pull/357))
 - `FlxFSM`: add sounds ([#357](https://github.com/HaxeFlixel/flixel-demos/pull/357))
 - `PixelPerfectCollision`: Cam's unknown, undocumented change, lol ([#357](https://github.com/HaxeFlixel/flixel-demos/pull/357))
+- `Save`: Increase size
 
 3.2.0 (May 1, 2024)
 - `FlxGameOfLife`: New demo! ([#342](https://github.com/HaxeFlixel/flixel-demos/pull/342))
