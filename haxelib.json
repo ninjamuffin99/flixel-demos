@@ -4,8 +4,8 @@
     "license": "MIT",
     "tags": ["game", "openfl", "flash", "neko", "cpp", "android", "ios", "demo", "cross"],
     "description": "Demo Projects for HaxeFlixel",
-    "version": "3.2.0",
-    "releasenote": "New FlxGameOfLife demo",
+    "version": "3.2.1",
+    "releasenote": "Flixel 5.9.0 compatibility",
     "contributors": ["haxeflixel", "Gama11", "GeoKureli"],
     "dependencies": {}
 }

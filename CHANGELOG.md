@@ -1,3 +1,16 @@
+3.2.1 (Dec 11, 2024)
+- Various changes to every Project.xml ([#359](https://github.com/HaxeFlixel/flixel-demos/pull/359))([#369](https://github.com/HaxeFlixel/flixel-demos/pull/369))
+- Add compatibility for 5.9.0 ([#351](https://github.com/HaxeFlixel/flixel-demos/pull/351))([#369](https://github.com/HaxeFlixel/flixel-demos/pull/369))
+- Add Turkish translation README ([#356](https://github.com/HaxeFlixel/flixel-demos/pull/356))
+- `FlxTilemapExt`: Fix bug when placing tiles ([#350](https://github.com/HaxeFlixel/flixel-demos/pull/350))
+- `Filters`: ([#367](https://github.com/HaxeFlixel/flixel-demos/pull/367))([#357](https://github.com/HaxeFlixel/flixel-demos/pull/357))
+  - Fix game filters not applying
+  - Improve quality of filter params
+- `FlxSound`: add pitch ([#358](https://github.com/HaxeFlixel/flixel-demos/pull/358))
+- `CollisionAndGrouping`: Increase game size ([#357](https://github.com/HaxeFlixel/flixel-demos/pull/357))
+- `FlxFSM`: add sounds ([#357](https://github.com/HaxeFlixel/flixel-demos/pull/357))
+- `PixelPerfectCollision`: Cam's unknown, undocumented change, lol ([#357](https://github.com/HaxeFlixel/flixel-demos/pull/357))
+
 3.2.0 (May 1, 2024)
 - `FlxGameOfLife`: New demo! ([#342](https://github.com/HaxeFlixel/flixel-demos/pull/342))
 - `FlxLightPuzzle`: Bigger screen size ([#328](https://github.com/HaxeFlixel/flixel-demos/pull/328))
