@@ -41,9 +41,6 @@ class Reg
 	 */
 	static public function getBounceImage(Height:Int):BitmapData
 	{
-		if (_bitmapData != null)
-			return _bitmapData;
-
 		_bitmapData = new BitmapData(8, Height, false, GREY_MED);
 
 		_rect = new Rectangle(4, 0, 4, Height);
