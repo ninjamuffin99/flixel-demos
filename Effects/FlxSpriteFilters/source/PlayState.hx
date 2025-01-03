@@ -1,5 +1,8 @@
 package;
 
+import openfl.filters.DisplacementMapFilterMode;
+import openfl.utils.Assets;
+import openfl.filters.DisplacementMapFilter;
 import flash.filters.BitmapFilter;
 import flash.filters.BlurFilter;
 import flash.filters.DropShadowFilter;
@@ -10,13 +13,11 @@ import flixel.FlxState;
 import flixel.graphics.frames.FlxFilterFrames;
 import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
+import openfl.geom.Point;
+
 #if flash
 import flash.filters.BevelFilter;
-import flash.filters.DisplacementMapFilter;
-import flash.filters.DisplacementMapFilterMode;
-import flash.geom.Point;
 import flixel.tweens.FlxEase;
-import openfl.Assets;
 #end
 
 class PlayState extends FlxState
@@ -55,9 +56,7 @@ class PlayState extends FlxState
 	var tween5:FlxTween;
 
 	var dropShadowFilter:DropShadowFilter;
-	#if flash
 	var displacementFilter:DisplacementMapFilter;
-	#end
 
 	override public function create():Void
 	{
@@ -92,12 +91,13 @@ class PlayState extends FlxState
 		spr5Filter = createFilterFrames(spr5, bevelFilter);
 		tween5 = FlxTween.tween(bevelFilter, {distance: -6}, 1.5, {type: PINGPONG, ease: FlxEase.quadInOut});
 		tween5.active = false;
-
+		#end
+		
 		displacementFilter = new DisplacementMapFilter(Assets.getBitmapData("assets/StaticMap.png"), new Point(0, 0), 1, 1, 15, 1,
 			DisplacementMapFilterMode.COLOR, 1, 0);
-		spr6 = createSprite(0.75, 100, "Displacement\n(flash only)");
+		spr6 = createSprite(0.75, 100, "Displacement");
 		spr6Filter = createFilterFrames(spr6, displacementFilter);
-		#end
+		
 	}
 
 	function createSprite(xFactor:Float, yOffset:Float, label:String)
@@ -150,11 +150,11 @@ class PlayState extends FlxState
 				isAnimSpr5 = !isAnimSpr5;
 				tween5.active = isAnimSpr5;
 			}
+			#end
 			else if (FlxG.mouse.overlaps(spr6))
 			{
 				isAnimSpr6 = !isAnimSpr6;
 			}
-			#end
 		}
 
 		if (isAnimSpr1)
@@ -190,11 +190,9 @@ class PlayState extends FlxState
 
 	function updateDisplaceFilter()
 	{
-		#if flash
 		displacementFilter.scaleX = FlxG.random.float(-10, 10);
 		displacementFilter.mapPoint = new Point(0, FlxG.random.float(0, 30));
 		updateFilter(spr6, spr6Filter);
-		#end
 	}
 
 	function updateDropShadowFilter(elapsed:Float)
